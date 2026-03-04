@@ -10,5 +10,5 @@ func New() *Storage {
 
 func (s *Storage) GetMessage() string {
 	// In a real application, this would fetch data from a database.
-	return "Hello from the storage layer!"
+	return "Hello World!"
 }
