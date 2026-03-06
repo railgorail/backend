@@ -39,21 +39,17 @@ jobs:
           echo "SEMVER_TAG=${GITHUB_REF_NAME}" >> $GITHUB_ENV
           echo "SHA_TAG=${GITHUB_SHA}" >> $GITHUB_ENV
 
-      # 5️⃣ Build & Push Docker Image (SemVer + SHA + latest)
+      # 5️⃣ Build & Push Docker Image
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          provenance: false 
+          provenance: false
           tags: |
             ${{ env.IMAGE_NAME }}:${{ env.SEMVER_TAG }}
             ${{ env.IMAGE_NAME }}:${{ env.SHA_TAG }}
             ${{ env.IMAGE_NAME }}:latest
-          cache-from: |
-            type=registry,ref=${{ env.IMAGE_NAME }}:buildcache
-            type=registry,ref=${{ env.IMAGE_NAME }}:latest
-          cache-to: type=registry,ref=${{ env.IMAGE_NAME }}:buildcache,mode=max
 
       # 6️⃣ Checkout infra repo (GitOps)
       - name: Checkout infra repository
